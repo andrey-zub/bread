@@ -65,10 +65,6 @@ class PageController extends SiteController
               for($i = 0; $i < count($productsSession); $i++){
                   if($productsSession[$i]['id'] == $_GET['id']){
                       $flag = true;
-                      if($productsArray['counts'] >= $productsSession[$i]['count'] + 1){
-
-                          $productsSession[$i]['count']++;
-                      }
                       break;
                   }
               }
@@ -97,22 +93,24 @@ class PageController extends SiteController
           $amount += $products[$key]['count_cart'] * $products[$key]['price']  ;
       }
 
+if (  $session->has('product')  ){
+           $product= $session->get('product');
+           $session->set('product',$products);
+}  else {
+   $session->set('product',$products);
+  }
 
-if (  $session->has('product') &&  !empty($session->get('product')) ){ $products = $session->get('product'); }
-  else {  $session->set('product',$products);   }
-          // $product= $session->get('product');
-          //  $session->set('product',$products);
           $session->set('amount',$amount);
 
   return $this->render('cart', [
             'dataProvider' => new ArrayDataProvider([
-                'allModels' => $products,
+                'allModels' => $product,
                 'key'=>'id',
                 'pagination' => [
                     'pageSize' => 50,
                 ],
             ]),
-            'products'=>$products,
+            'products'=>$product,
         ]);
 }
 
@@ -257,6 +255,13 @@ public function actionCheckout(){
           return $this->redirect(['page/check-fail']);
         }
 
+        $cookies = \Yii::$app->response->cookies;
+        unset($cookies['email']);
+        unset($cookies['name']);
+        unset($cookies['phone']);
+        unset($cookies['id']);
+        unset($cookies['amount']);
+
       return $this->render('checkout',compact('session','order'))  ;
 
       }
@@ -350,11 +355,7 @@ public function actionCheck()
             unset($session['product']);
             unset($session['amount']);
 
-            unset($cookies['email']);
-            unset($cookies['name']);
-            unset($cookies['phone']);
-            unset($cookies['id']);
-            unset($cookies['amount']);
+
 
           return $this->render('check', compact('session','order','response'));
 

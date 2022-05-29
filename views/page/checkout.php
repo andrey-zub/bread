@@ -72,15 +72,30 @@
     </table>
 </div>
 <div class="col-lg-12 btn_cart_wrap">
+<?php $form = \yii\widgets\ActiveForm::begin() ?>
+
+<?   $cookies = \Yii::$app->response->cookies;
+      if(!$cookies->has('name') && !$cookies->has('email') && !$cookies->has('phone') ):?>
+
   <h4>Данные покупателя</h4>
-  <?php $form = \yii\widgets\ActiveForm::begin() ?>
+
       <?= $form->field($order, 'name') ?>
       <?= $form->field($order, 'email') ?>
       <?= $form->field($order, 'phone') ?>
 
 
-      <?= \yii\helpers\Html::submitButton('Отменить заказ', ['class' => 'submit btn btn-danger','value'=>'fail', 'name'=>'submit']) ?>
-      <?= \yii\helpers\Html::submitButton('Подтвердить заказ', ['class' => 'submit btn btn-success ','value'=>'check', 'name'=>'submit']) ?>
-  <?php \yii\widgets\ActiveForm::end() ?>
+    <?= \yii\helpers\Html::submitButton('Отменить заказ', ['class' => 'submit btn btn-danger','value'=>'fail', 'name'=>'submit']) ?>
+    <?= \yii\helpers\Html::submitButton('Подтвердить заказ', ['class' => 'submit btn btn-success ','value'=>'check', 'name'=>'submit']) ?>
+    <?php \yii\widgets\ActiveForm::end() ?>
 </div>
+
+
+          <?else:?>
+                <?= \yii\helpers\Html::submitButton('Отменить заказ', ['class' => 'submit btn btn-danger','value'=>'fail', 'name'=>'submit']) ?>
+                <?= \yii\helpers\Html::submitButton('Подтвердить заказ', ['class' => 'submit btn btn-success ','value'=>'check', 'name'=>'submit']) ?>
+                <?php \yii\widgets\ActiveForm::end() ?>
+          </div>
+        <?php endif;?>
+
+
 <?php endif;?>
