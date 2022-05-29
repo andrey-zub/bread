@@ -16,7 +16,9 @@ use app\models\Product;
 use app\models\OrderCheck;
 use app\models\Owner;
 use app\models\OrderInfo;
+use app\models\BakerInfo;
 use app\models\Report;
+use app\models\TechCard;
 
 const SECRET_KEY = 'eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6ImpuNHNpNC0wMCIsInVzZXJfaWQiOiI3OTUxNDkxNTk2MiIsInNlY3JldCI6IjM0NTg0Mjk5Njg4MWI0MDEyYjAxNmZmZGU4YTEwM2Q3ODE1YWJmYTMyNzIxZGVjMDViZjNmM2VjNWQwNDdmMTQifX0=';
 
@@ -259,6 +261,7 @@ public function actionCheckout(){
 
       }
 
+// Успешная оплата заказа
 public function actionCheck()
       {
             $billPayments = new \Qiwi\Api\BillPayments(SECRET_KEY);
@@ -316,6 +319,21 @@ public function actionCheck()
                       $ord_inf->save();
             }
 
+            foreach($prod_inf as $key => $value){
+              $bkr_inf = new BakerInfo;
+                      $bkr_inf->order_info_id = $ord_inf->id;
+                      $bkr_inf->baker = $ord_inf->baker_id;
+                      $bkr_inf->product = $prod_inf[$key]['id'];
+                                  $tech_card = new TechCard;
+                                  $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
+                      $bkr_inf->technolog = $tech_card->technolog_id;
+                      $bkr_inf->recipe = $tech_card->recipe;
+
+                      $bkr_inf->save();
+            }
+
+
+
             $report= new Report();
               $report->owner_name = $ord->name;
               $report->owner_email = $ord->email;
@@ -325,6 +343,7 @@ public function actionCheck()
               $report->manager_ID = $ord->manager_id;
               $report->boss_ID = 501;
               $report->save();
+
 
             unset($session['link']);
             unset($session['productsSession']);
@@ -338,9 +357,10 @@ public function actionCheck()
             unset($cookies['amount']);
 
           return $this->render('check', compact('session','order','response'));
-          //return $this->render('check', ['session'=>$session, 'order'=>$order, 'email'=>$cookies->getValue('email')]);
+
   	}
 
+// Отмена заказа
     public function actionCheckFail()
     {
 
@@ -409,11 +429,7 @@ public function actionCheck()
             unset($session['product']);
             unset($session['amount']);
 
-                unset($cookies['email']);
-                unset($cookies['name']);
-                unset($cookies['phone']);
-                unset($cookies['id']);
-                unset($cookies['amount']);
+
 
 
         return $this->render('check-fail', compact('session', 'order','response'));

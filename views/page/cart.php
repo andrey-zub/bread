@@ -16,7 +16,7 @@
 
 <? $session = Yii::$app->session;
      $product = $session->get('product');
-     $amount = $session->get('amount');
+
          ?>
 
 <div class="col-lg-12 ">
@@ -104,7 +104,11 @@
                 </td>
                 <td >-------</td>
             </tr>
-        <?php endforeach;?>
+        <?php endforeach;
+        $session = Yii::$app->session;
+        $session->set('amount',$sum);
+        $amount= $session->get('amount');
+        ?>
         <tr class="cart_prod_footer">
             <td colspan="1" class="null_cart"></td>
             <td colspan="2" class="rez_title_cart">Итого, к оплате:</td>
