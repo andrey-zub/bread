@@ -117,23 +117,18 @@ if (  $session->has('product')  ){
 
 
 //--------------------------------------------------------
-public function actionCartDeBuff()
-{
-    $session = Yii::$app->session;
-//        $session->destroy();
+public function actionCartDeBuff(){
+$session = Yii::$app->session;
 
-    $product = $session->get('product');
+    if($session->has('product')){  $product = $session->get('product');  }
+    else{  $product = array();   }
 
-foreach ( $product as $key => $value){
-
-    if($product[$key]['id'] == $_GET['id']){
-
-        $product[$key]['count_cart']--  ;
-        break;
-
+    foreach ( $product as $key => $value){
+        if($product[$key]['id'] == $_GET['id']){
+            $product[$key]['count_cart']--  ;
+            break;
+        }
     }
-
-}
 
  $session->set('product',$product);
 
@@ -147,38 +142,25 @@ foreach ( $product as $key => $value){
            ]),
            'products'=>$product,
        ]);
-
 }
 
 
 
 
-public function actionCartBuff()
-{
-    $session = Yii::$app->session;
-//        $session->destroy();
+public function actionCartBuff(){
+$session = Yii::$app->session;
 
-if($session->has('product')){
-    $product = $session->get('product');
-}
-else{
-    $product = array();
-}
+    if($session->has('product')){  $product = $session->get('product');  }
+    else{  $product = array();   }
 
-foreach ( $product as $key => $value){
-
-    if($product[$key]['id'] == $_GET['id']){
-
-        $product[$key]['count_cart']++  ;
-        break;
-
+    foreach ( $product as $key => $value){
+        if($product[$key]['id'] == $_GET['id']){
+            $product[$key]['count_cart']++  ;
+            break;
+        }
     }
 
-}
-
  $session->set('product',$product);
-
-
 
  return $this->render('cart-buff', [
            'dataProvider' => new ArrayDataProvider([
@@ -200,13 +182,9 @@ public function actionCheckout(){
         $session = Yii::$app->session;
 
 
-        $sum = floatval($session->get('amount')) ;
-
       if($order->load(\Yii::$app->request->post())){
 
-
             $billPayments = new \Qiwi\Api\BillPayments(SECRET_KEY);
-
 
               $publicKey = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsZ232WYoMXoun8DPNcoxZShiC2AwFPnt34SX1pQSww7jFGZVyhe8rG5QDXhLZtNj48CSZbLydDrzxsXKazhXrwtNNP1wXryNtoteA6pDp';
 
@@ -413,6 +391,23 @@ public function actionCheck()
                     $ord_inf->product_id = $prod_inf[$key]['id'];
 
                     $ord_inf->save();
+          }
+
+          $tech_card = new TechCard;
+          $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
+          $session->set('tech',$tech_card->technolog_id);
+
+          foreach($prod_inf as $key => $value){
+            $bkr_inf = new BakerInfo;
+                    $bkr_inf->order_info_id = $ord_inf->id;
+                    $bkr_inf->baker = $ord_inf->baker_id;
+                    $bkr_inf->product = $prod_inf[$key]['id'];
+                                $tech_card = new TechCard;
+                                $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
+                    $bkr_inf->technolog = $tech_card->technolog_id;
+                    $bkr_inf->recipe = $tech_card->recipe;
+
+                    $bkr_inf->save();
           }
 
           $report= new Report();
