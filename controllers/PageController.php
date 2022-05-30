@@ -69,7 +69,7 @@ class PageController extends SiteController
                   }
               }
               if(!$flag){
-                  array_push($productsSession, ['id' => $_GET['id'], 'count' => 0 ]);
+                  array_push($productsSession, ['id' => $_GET['id'], 'count' => 1 ]);
               }
           }
       }
@@ -93,12 +93,12 @@ class PageController extends SiteController
           $amount += $products[$key]['count_cart'] * $products[$key]['price']  ;
       }
 
-if (  $session->has('product')  ){
-           $product= $session->get('product');
-           $session->set('product',$products);
-}  else {
-   $session->set('product',$products);
-  }
+              if (  $session->has('product')  ){
+                         $product= $session->get('product');
+                         $session->set('product',$products);
+              }  else {
+                 $session->set('product',$products);
+                }
 
           $session->set('amount',$amount);
 
@@ -302,7 +302,7 @@ public function actionCheck()
                       $ord_inf->save();
             }
 
-            
+
 
 
 
