@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OwnerSearchController implements the CRUD actions for Owner model.
+ * OwnerController implements the CRUD actions for Owner model.
  */
 class OwnerController extends AppManagerController
 {

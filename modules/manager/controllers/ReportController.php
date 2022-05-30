@@ -10,7 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ReportSearchController implements the CRUD actions for Report model.
+ * ReportController implements the CRUD actions for Report model.
  */
 class ReportController extends AppManagerController
 {

@@ -46,6 +46,11 @@ class OrderCheckSearch extends OrderCheck
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                 'forcePageParam' => false,
+                 'pageSizeParam' => false,
+                'pageSize' => 3
+            ]
         ]);
 
         $this->load($params);

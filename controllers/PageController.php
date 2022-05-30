@@ -18,7 +18,7 @@ use app\models\Owner;
 use app\models\OrderInfo;
 use app\models\BakerInfo;
 use app\models\Report;
-use app\models\TechCard;
+
 
 const SECRET_KEY = 'eyJ2ZXJzaW9uIjoiUDJQIiwiZGF0YSI6eyJwYXlpbl9tZXJjaGFudF9zaXRlX3VpZCI6ImpuNHNpNC0wMCIsInVzZXJfaWQiOiI3OTUxNDkxNTk2MiIsInNlY3JldCI6IjM0NTg0Mjk5Njg4MWI0MDEyYjAxNmZmZGU4YTEwM2Q3ODE1YWJmYTMyNzIxZGVjMDViZjNmM2VjNWQwNDdmMTQifX0=';
 
@@ -393,22 +393,6 @@ public function actionCheck()
                     $ord_inf->save();
           }
 
-          $tech_card = new TechCard;
-          $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
-          $session->set('tech',$tech_card->technolog_id);
-
-          foreach($prod_inf as $key => $value){
-            $bkr_inf = new BakerInfo;
-                    $bkr_inf->order_info_id = $ord_inf->id;
-                    $bkr_inf->baker = $ord_inf->baker_id;
-                    $bkr_inf->product = $prod_inf[$key]['id'];
-                                $tech_card = new TechCard;
-                                $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
-                    $bkr_inf->technolog = $tech_card->technolog_id;
-                    $bkr_inf->recipe = $tech_card->recipe;
-
-                    $bkr_inf->save();
-          }
 
           $report= new Report();
             $report->owner_name = $ord->name;

@@ -17,8 +17,8 @@ class TechCardSearch extends TechCard
     public function rules()
     {
         return [
-            [['id', ], 'integer'],
-            [['recipe','product_id', 'technolog_id'], 'safe'],
+            [['id', 'product_id', 'technolog_id'], 'integer'],
+            [['recipe'], 'safe'],
         ];
     }
 
@@ -49,7 +49,7 @@ class TechCardSearch extends TechCard
             'pagination' => [
                  'forcePageParam' => false,
                  'pageSizeParam' => false,
-                'pageSize' => 3
+                'pageSize' => 5
             ]
         ]);
 
@@ -67,13 +67,8 @@ class TechCardSearch extends TechCard
             'product_id' => $this->product_id,
             'technolog_id' => $this->technolog_id,
         ]);
-        $query->joinwith(['product','employee']);
 
         $query->andFilterWhere(['like', 'recipe', $this->recipe]);
-
-          $query->andFilterWhere(['like', 'product.product_name', $this->product_id]);
-          $query->andFilterWhere(['like', 'employee.fio', $this->technolog_id]);
-
 
         return $dataProvider;
     }

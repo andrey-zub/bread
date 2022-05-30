@@ -46,6 +46,11 @@ class OwnerSearch extends Owner
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                 'forcePageParam' => false,
+                 'pageSizeParam' => false,
+                'pageSize' => 3
+            ]
         ]);
 
         $this->load($params);

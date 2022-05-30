@@ -14,8 +14,6 @@ use Yii;
  * @property string|null $passport
  *
  * @property Boss[] $bosses
- * @property Order[] $orders
- * @property Report[] $reports
  * @property TechCard[] $techCards
  */
 class Employee extends \yii\db\ActiveRecord
@@ -64,26 +62,6 @@ class Employee extends \yii\db\ActiveRecord
     public function getBosses()
     {
         return $this->hasMany(Boss::className(), ['boss_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Orders]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrders()
-    {
-        return $this->hasMany(Order::className(), ['manager_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Reports]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getReports()
-    {
-        return $this->hasMany(Report::className(), ['manager_id' => 'id']);
     }
 
     /**

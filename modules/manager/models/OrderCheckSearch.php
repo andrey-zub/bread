@@ -1,15 +1,15 @@
 <?php
 
-namespace app\modules\admin\models;
+namespace app\modules\manager\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\modules\admin\models\Order;
+use app\modules\manager\models\OrderCheck;
 
 /**
- * OrderSearch represents the model behind the search form of `app\modules\admin\models\Order`.
+ * OrderCheckSearch represents the model behind the search form of `app\modules\manager\models\OrderCheck`.
  */
-class OrderSearch extends Order
+class OrderCheckSearch extends OrderCheck
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id',  'sum'], 'integer'],
-            [['date_init', 'finish','manager_id',], 'safe'],
+            [['id', 'owner_id', 'manager_id', 'amount'], 'integer'],
+            [['date_init', 'finish', 'name', 'phone', 'email', 'billid'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class OrderSearch extends Order
      */
     public function search($params)
     {
-        $query = Order::find();
+        $query = OrderCheck::find();
 
         // add conditions that should always apply here
 
@@ -64,18 +64,17 @@ class OrderSearch extends Order
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'manager_id' => $this->manager_id,
             'owner_id' => $this->owner_id,
+            'manager_id' => $this->manager_id,
             'date_init' => $this->date_init,
-            'sum' => $this->sum,
+            'amount' => $this->amount,
         ]);
 
-        $query->joinwith(['employee','owner']);
-
-
-            $query->andFilterWhere(['like','employee.fio',$this->manager_id]);
-            $query->andFilterWhere(['like','owner.name',$this->owner_id]);
-        $query->andFilterWhere(['like', 'finish', $this->finish]);
+        $query->andFilterWhere(['like', 'finish', $this->finish])
+            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'email', $this->email])
+            ->andFilterWhere(['like', 'billid', $this->billid]);
 
         return $dataProvider;
     }

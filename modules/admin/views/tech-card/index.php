@@ -7,7 +7,12 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\modules\admin\models\TechCardSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+
 $this->title = 'Tech Cards';
+$this->params['breadcrumbs'][] = array(
+    'label'=> 'Admin panel',
+    'url'=>Yii::$app->urlManager->createUrl(['admin/'])
+);
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tech-card-index">

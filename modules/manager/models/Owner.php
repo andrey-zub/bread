@@ -8,12 +8,9 @@ use Yii;
  * This is the model class for table "owner".
  *
  * @property int $id
- * @property int|null $order_id
  * @property string|null $name
  * @property string|null $phone
  * @property string|null $email
- *
- * @property OrderInfo[] $orderInfos
  */
 class Owner extends \yii\db\ActiveRecord
 {
@@ -32,9 +29,8 @@ class Owner extends \yii\db\ActiveRecord
     {
         return [
             [['id'], 'required'],
-            [['id',], 'integer'],
+            [['id'], 'integer'],
             [['name', 'phone', 'email'], 'string', 'max' => 50],
-
             [['id'], 'unique'],
         ];
     }
@@ -46,12 +42,9 @@ class Owner extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            
             'name' => 'Name',
             'phone' => 'Phone',
             'email' => 'Email',
         ];
     }
-
-
 }

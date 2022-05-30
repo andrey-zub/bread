@@ -46,6 +46,11 @@ class EmployeeSearch extends Employee
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                 'forcePageParam' => false,
+                 'pageSizeParam' => false,
+                'pageSize' => 3
+            ]
         ]);
 
         $this->load($params);

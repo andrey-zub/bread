@@ -4,21 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\Order */
+/* @var $model app\modules\admin\models\Report */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="order-form">
+<div class="report-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
+    <?= $form->field($model, 'pay_sum')->textInput() ?>
 
-    <?= $form->field($model, 'manager_id')->textInput() ?>
+    <?= $form->field($model, 'pay_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'date_init')->textInput() ?>
+    <?= $form->field($model, 'manager_ID')->textInput() ?>
 
-    <?= $form->field($model, 'finish')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'boss_ID')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

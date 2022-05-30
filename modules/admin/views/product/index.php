@@ -8,6 +8,12 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Products';
+
+$this->params['breadcrumbs'][] = array(
+    'label'=> 'Admin panel',
+    'url'=>Yii::$app->urlManager->createUrl(['admin/'])
+);
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">

@@ -17,8 +17,8 @@ class ReportSearch extends Report
     public function rules()
     {
         return [
-            [['id', 'order_id', 'boss_id', 'manager_id'], 'integer'],
-            [[ 'boss_id', 'manager_id'], 'safe'],
+            [['id', 'pay_sum', 'manager_ID', 'boss_ID'], 'integer'],
+            [['owner_name', 'owner_email', 'status', 'pay_id'], 'safe'],
         ];
     }
 
@@ -49,7 +49,7 @@ class ReportSearch extends Report
             'pagination' => [
                  'forcePageParam' => false,
                  'pageSizeParam' => false,
-                'pageSize' => 3
+                'pageSize' => 5
             ]
         ]);
 
@@ -64,16 +64,16 @@ class ReportSearch extends Report
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'order_id' => $this->order_id,
-            'boss_id' => $this->boss_id,
-            'manager_id' => $this->manager_id,
+            'pay_sum' => $this->pay_sum,
+            'manager_ID' => $this->manager_ID,
+            'boss_ID' => $this->boss_ID,
         ]);
 
+        $query->andFilterWhere(['like', 'owner_name', $this->owner_name])
+            ->andFilterWhere(['like', 'owner_email', $this->owner_email])
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'pay_id', $this->pay_id]);
 
-        $query->joinwith(['employee']);
-
-        $query->andFilterWhere(['like','employee.fio',$this->manager_id]);
-        $query->andFilterWhere(['like','employee.fio',$this->boss_id]);
         return $dataProvider;
     }
 }

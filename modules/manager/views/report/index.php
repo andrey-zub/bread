@@ -9,7 +9,7 @@ use yii\widgets\Pjax;
 
 $this->title = 'Reports';
 $this->params['breadcrumbs'][] = array(
-    'label'=> 'manager panel',
+    'label'=> 'Manager panel',
     'url'=>Yii::$app->urlManager->createUrl(['manager/'])
 );
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,9 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,20 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-
+            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'order_id',
-            [
-              'attribute'=>'boss_id',
-               'value'=>'employee.fio'
-            ],
-            [
-              'attribute'=>'manager_id',
-              'value'=>'employee.fio',
-            ],
+            'owner_name',
+            'owner_email:email',
+            'status',
+            'pay_sum',
+            //'pay_id',
+            //'manager_ID',
+            //'boss_ID',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+          'template' => '{view} {update}',
+          ],
         ],
     ]); ?>
 

@@ -18,6 +18,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'owner_id')->textInput() ?>
 
+    <?= $form->field($model, 'baker_id')->textInput() ?>
+
+    <?= $form->field($model, 'manager_id')->textInput() ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

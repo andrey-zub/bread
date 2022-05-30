@@ -49,7 +49,7 @@ class ProductSearch extends Product
             'pagination' => [
                  'forcePageParam' => false,
                  'pageSizeParam' => false,
-                'pageSize' => 3
+                'pageSize' => 5
             ]
         ]);
 

@@ -7,7 +7,6 @@ use Yii;
 /**
  * This is the model class for table "tech_card".
  *
- * @property int $id
  * @property int|null $product_id
  * @property int|null $technolog_id
  * @property string|null $recipe
@@ -31,10 +30,8 @@ class TechCard extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'product_id', 'technolog_id'], 'integer'],
+            [['product_id', 'technolog_id'], 'integer'],
             [['recipe'], 'string'],
-            [['id'], 'unique'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
             [['technolog_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['technolog_id' => 'id']],
         ];
@@ -46,9 +43,8 @@ class TechCard extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'product_id' => 'Product ',
-            'technolog_id' => 'Technolog ',
+            'product_id' => 'Product ID',
+            'technolog_id' => 'Technolog ID',
             'recipe' => 'Recipe',
         ];
     }
@@ -62,23 +58,14 @@ class TechCard extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
-    public function getProductName()
-    {
-        return $this->hasOne(Product::className(), ['id' => 'product_id'])->via(['product_name']);
-    }
 
     /**
      * Gets query for [[Technolog]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEmployee()
+    public function getTechnolog()
     {
         return $this->hasOne(Employee::className(), ['id' => 'technolog_id']);
-    }
-
-    public function getEmployeeName()
-    {
-        return $this->hasOne(Employee::className(), ['id' => 'technolog_id'])->via(['fio']);
     }
 }

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\modules\admin\models\Report */
+/* @var $model app\modules\manager\models\Report */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Reports', 'url' => ['index']];
@@ -24,9 +24,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'order_id',
-            'boss_id',
-            'manager_id',
+            'owner_name',
+            'owner_email:email',
+            'status',
+            'pay_sum',
+            'pay_id',
+            'manager_ID',
+            'boss_ID',
         ],
     ]) ?>
 

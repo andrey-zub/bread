@@ -17,8 +17,7 @@ class OrderInfoSearch extends OrderInfo
     public function rules()
     {
         return [
-            [['order_id', 'product_id', 'owner_id', 'baker_id'], 'integer'],
-            [['product_id', 'owner_id', 'baker_id'], 'safe'],
+            [['id', 'order_id', 'product_id', 'owner_id', 'baker_id', 'manager_id'], 'integer'],
         ];
     }
 
@@ -49,8 +48,8 @@ class OrderInfoSearch extends OrderInfo
             'pagination' => [
                  'forcePageParam' => false,
                  'pageSizeParam' => false,
-                'pageSize' => 3,
-              ],
+                'pageSize' => 5
+            ]
         ]);
 
         $this->load($params);
@@ -63,17 +62,14 @@ class OrderInfoSearch extends OrderInfo
 
         // grid filtering conditions
         $query->andFilterWhere([
+            'id' => $this->id,
             'order_id' => $this->order_id,
             'product_id' => $this->product_id,
             'owner_id' => $this->owner_id,
             'baker_id' => $this->baker_id,
+            'manager_id' => $this->manager_id,
         ]);
 
-        $query->joinwith(['employee','owner','product']);
-
-        $query->andFilterWhere(['like','emplooyee.fio',$this->baker_id]);
-          $query->andFilterWhere(['like','owner.name',$this->owner_id]);
-              $query->andFilterWhere(['like','product.product_name',$this->product_id]);
         return $dataProvider;
     }
 }

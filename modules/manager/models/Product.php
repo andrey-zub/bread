@@ -8,11 +8,10 @@ use Yii;
  * This is the model class for table "product".
  *
  * @property int $id
- * @property string|null $product
+ * @property string|null $product_name
  * @property int|null $price
  * @property int|null $counts
  *
- * @property OrderInfo[] $orderInfos
  * @property TechCard[] $techCards
  */
 class Product extends \yii\db\ActiveRecord
@@ -45,20 +44,10 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'product_name' => 'Product',
+            'product_name' => 'Product Name',
             'price' => 'Price',
             'counts' => 'Counts',
         ];
-    }
-
-    /**
-     * Gets query for [[OrderInfos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderInfos()
-    {
-        return $this->hasMany(OrderInfo::className(), ['product_id' => 'id']);
     }
 
     /**

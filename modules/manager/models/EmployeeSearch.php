@@ -49,7 +49,7 @@ class EmployeeSearch extends Employee
             'pagination' => [
                  'forcePageParam' => false,
                  'pageSizeParam' => false,
-                'pageSize' => 3
+                'pageSize' => 5
             ]
         ]);
 

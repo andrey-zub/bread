@@ -3,16 +3,16 @@
 namespace app\modules\manager\controllers;
 
 use Yii;
-use app\modules\manager\models\Order;
-use app\modules\manager\models\OrderSearch;
+use app\modules\manager\models\OrderCheck;
+use app\modules\manager\models\OrderCheckSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrderSearchController implements the CRUD actions for Order model.
+ * OrderCheckController implements the CRUD actions for OrderCheck model.
  */
-class OrderController extends AppManagerController
+class OrderCheckController extends AppManagerController
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Lists all Order models.
+     * Lists all OrderCheck models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OrderSearch();
+        $searchModel = new OrderCheckSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Displays a single Order model.
+     * Displays a single OrderCheck model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Creates a new Order model.
+     * Creates a new OrderCheck model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Order();
+        $model = new OrderCheck();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Updates an existing Order model.
+     * Updates an existing OrderCheck model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Deletes an existing Order model.
+     * Deletes an existing OrderCheck model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class OrderController extends AppManagerController
     }
 
     /**
-     * Finds the Order model based on its primary key value.
+     * Finds the OrderCheck model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Order the loaded model
+     * @return OrderCheck the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Order::findOne($id)) !== null) {
+        if (($model = OrderCheck::findOne($id)) !== null) {
             return $model;
         }
 

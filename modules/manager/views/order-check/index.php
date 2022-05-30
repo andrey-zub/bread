@@ -4,23 +4,22 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\modules\admin\models\OrderSearch */
+/* @var $searchModel app\modules\admin\models\OrderCheckSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Orders';
+$this->title = 'Order Checks';
+
 $this->params['breadcrumbs'][] = array(
-    'label'=> 'Admin panel',
-    'url'=>Yii::$app->urlManager->createUrl(['admin/'])
+    'label'=> 'Manager panel',
+    'url'=>Yii::$app->urlManager->createUrl(['manager/'])
 );
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="order-index">
+<div class="order-check-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Order', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+  
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,23 +28,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-
+            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            [
-              'attribute'=>'manager_id',
-              'value'=> 'employee.fio'
-            ],
-            [
-              'attribute'=>'owner_id',
-              'value'=> 'owner.name'
-            ],
-
+            'owner_id',
+            'manager_id',
             'date_init',
-            'sum',
             'finish',
+            //'name',
+            //'phone',
+            //'email:email',
+            //'billid',
+            //'amount',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+          'template' => '{view} ]',
+        ],
         ],
     ]); ?>
 

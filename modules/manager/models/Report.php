@@ -7,14 +7,13 @@ use Yii;
 /**
  * This is the model class for table "report".
  *
- * @property int $id
- * @property int|null $order_id
- * @property int|null $boss_id
- * @property int $manager_id
- *
- * @property Order $order
- * @property Employee $manager
- * @property Boss $boss
+ * @property string|null $owner-name
+ * @property string|null $owner-email
+ * @property string|null $stasus
+ * @property int|null $pay_sum
+ * @property string|null $pay_id
+ * @property int|null $manager_ID
+ * @property int $boss_ID
  */
 class Report extends \yii\db\ActiveRecord
 {
@@ -32,12 +31,10 @@ class Report extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'manager_id'], 'required'],
-            [['id', 'order_id', 'boss_id', 'manager_id'], 'integer'],
-            [['id'], 'unique'],
-            [['order_id'], 'exist', 'skipOnError' => true, 'targetClass' => Order::className(), 'targetAttribute' => ['order_id' => 'id']],
-            [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['manager_id' => 'id']],
-            [['boss_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['boss_id' => 'boss_id']],
+            [['pay_sum', 'manager_ID', 'boss_ID'], 'integer'],
+            [['boss_ID'], 'required'],
+            [['owner-name', 'owner-email', 'stasus'], 'string', 'max' => 50],
+            [['pay_id'], 'string', 'max' => 255],
         ];
     }
 
@@ -47,40 +44,18 @@ class Report extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'order_id' => 'Order ID',
-            'boss_id' => 'Boss ID',
-            'manager_id' => 'Manager ID',
+            'owner-name' => 'Owner Name',
+            'owner-email' => 'Owner Email',
+            'stasus' => 'Stasus',
+            'pay_sum' => 'Pay Sum',
+            'pay_id' => 'Pay ID',
+            'manager_ID' => 'Manager ID',
+            'boss_ID' => 'Boss ID',
         ];
     }
 
-    /**
-     * Gets query for [[Order]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrder()
-    {
-        return $this->hasOne(Order::className(), ['id' => 'order_id']);
-    }
 
-    /**
-     * Gets query for [[Manager]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEmployee()
-    {
-        return $this->hasOne(Employee::className(), ['id' => 'manager_id']);
-    }
 
-    /**
-     * Gets query for [[Boss]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEmployeeName()
-    {
-        return $this->hasOne(Employee::className(), ['id' => 'boss_id'])->via(['fio']);
-    }
+
+
 }

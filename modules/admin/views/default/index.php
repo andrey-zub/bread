@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = array(
 
                 <p>Страница для работы с таблицей [ Заказы  ]</p>
 
-                <p><a class="btn btn-default" href="<?=Yii::$app->urlManager->createUrl(['admin/order'])?>">Перейти</a></p>
+                <p><a class="btn btn-default" href="<?=Yii::$app->urlManager->createUrl(['admin/order-check'])?>">Перейти</a></p>
             </div>
         </div>
 
