@@ -302,18 +302,7 @@ public function actionCheck()
                       $ord_inf->save();
             }
 
-            foreach($prod_inf as $key => $value){
-              $bkr_inf = new BakerInfo;
-                      $bkr_inf->order_info_id = $ord_inf->id;
-                      $bkr_inf->baker = $ord_inf->baker_id;
-                      $bkr_inf->product = $prod_inf[$key]['id'];
-                                  $tech_card = new TechCard;
-                                  $tech_card->find()->where(['product_id'=>$prod_inf[$key]['id']]);
-                      $bkr_inf->technolog = $tech_card->technolog_id;
-                      $bkr_inf->recipe = $tech_card->recipe;
-
-                      $bkr_inf->save();
-            }
+            
 
 
 
