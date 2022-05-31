@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * OwnerController implements the CRUD actions for Owner model.
  */
-class OwnerController extends AppAdminController
+class OwnerController extends Controller
 {
     /**
      * {@inheritdoc}

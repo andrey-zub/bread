@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ReportController implements the CRUD actions for Report model.
  */
-class ReportController extends AppManagerController
+class ReportController extends Controller
 {
     /**
      * {@inheritdoc}

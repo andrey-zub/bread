@@ -17,7 +17,7 @@ class OwnerSearch extends Owner
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'owner_id'], 'integer'],
             [['name', 'phone', 'email'], 'safe'],
         ];
     }
@@ -46,11 +46,6 @@ class OwnerSearch extends Owner
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                 'forcePageParam' => false,
-                 'pageSizeParam' => false,
-                'pageSize' => 5
-            ]
         ]);
 
         $this->load($params);
@@ -64,6 +59,7 @@ class OwnerSearch extends Owner
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'owner_id' => $this->owner_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])

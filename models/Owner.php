@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "owner".
  *
  * @property int $id
+ * @property int|null $owner_id
  * @property string|null $name
  * @property string|null $phone
  * @property string|null $email
  *
- * @property Order[] $orders
- * @property OrderInfo[] $orderInfos
+ * @property OrderCheck $owner
  */
 class Owner extends \yii\db\ActiveRecord
 {
@@ -31,10 +31,9 @@ class Owner extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id'], 'integer'],
+            [['owner_id'], 'integer'],
             [['name', 'phone', 'email'], 'string', 'max' => 50],
-            [['id'], 'unique'],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => OrderCheck::className(), 'targetAttribute' => ['owner_id' => 'owner_id']],
         ];
     }
 
@@ -45,6 +44,7 @@ class Owner extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'owner_id' => 'Owner ID',
             'name' => 'Name',
             'phone' => 'Phone',
             'email' => 'Email',
@@ -52,22 +52,12 @@ class Owner extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Orders]].
+     * Gets query for [[Owner]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getOrders()
+    public function getOwner()
     {
-        return $this->hasMany(Order::className(), ['owner_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[OrderInfos]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getOrderInfos()
-    {
-        return $this->hasMany(OrderInfo::className(), ['owner_id' => 'id']);
+        return $this->hasOne(OrderCheck::className(), ['owner_id' => 'owner_id']);
     }
 }

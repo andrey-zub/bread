@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-      
+
     </p>
 
     <?= DetailView::widget([
@@ -29,8 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             'pay_sum',
             'pay_id',
-            'manager_ID',
-            'boss_ID',
+            'manager_id',
+            'boss_id',
         ],
     ]) ?>
 

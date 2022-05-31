@@ -36,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_id',
             'owner_id',
             'baker_id',
-            //'manager_id',
+            'manager_id',
+            'order_status',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

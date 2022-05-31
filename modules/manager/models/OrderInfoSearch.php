@@ -18,6 +18,7 @@ class OrderInfoSearch extends OrderInfo
     {
         return [
             [['id', 'order_id', 'product_id', 'owner_id', 'baker_id', 'manager_id'], 'integer'],
+            [['order_status'], 'safe'],
         ];
     }
 
@@ -45,11 +46,6 @@ class OrderInfoSearch extends OrderInfo
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                 'forcePageParam' => false,
-                 'pageSizeParam' => false,
-                'pageSize' => 5
-            ]
         ]);
 
         $this->load($params);
@@ -69,6 +65,8 @@ class OrderInfoSearch extends OrderInfo
             'baker_id' => $this->baker_id,
             'manager_id' => $this->manager_id,
         ]);
+
+        $query->andFilterWhere(['like', 'order_status', $this->order_status]);
 
         return $dataProvider;
     }

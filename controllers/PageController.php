@@ -281,7 +281,7 @@ public function actionCheck()
 
             // запись данных о заказчике
           $ownr = new Owner;
-            $ownr->id =  $ord->id;
+            $ownr->owner_id =  $ord->owner_id;
             $ownr->email =  $ord->email;
             $ownr->name =  $ord->name;
             $ownr->phone =  $ord->phone;
@@ -299,6 +299,7 @@ public function actionCheck()
                       $ord_inf->manager_id = $ord->manager_id;
                       $ord_inf->baker_id =   $baker;
                       $ord_inf->product_id = $prod_inf[$key]['id'];
+                      $ord_inf->order_status = 'true' ;
                       $ord_inf->save();
             }
 
@@ -312,8 +313,8 @@ public function actionCheck()
               $report->status = $ord->finish;
               $report->pay_sum = $ord->amount;
               $report->pay_id = $ord->billid;
-              $report->manager_ID = $ord->manager_id;
-              $report->boss_ID = 501;
+              $report->manager_id = $ord->manager_id;
+              $report->boss_id = 501;
               $report->save();
 
 
@@ -358,7 +359,7 @@ public function actionCheck()
 
           // запись данных о заказчике
         $ownr = new Owner;
-          $ownr->id =  $ord->id;
+          $ownr->owner_id =  $ord->owner_id;
           $ownr->email =  $ord->email;
           $ownr->name =  $ord->name;
           $ownr->phone =  $ord->phone;
@@ -369,16 +370,14 @@ public function actionCheck()
 
           $baker = rand(301,305);
 
-
           foreach($prod_inf as $key => $value){
             $ord_inf = new OrderInfo;
-
                     $ord_inf->order_id = $ord->id;
                     $ord_inf->owner_id = $ord->owner_id;
                     $ord_inf->manager_id = $ord->manager_id;
                     $ord_inf->baker_id =   $baker;
                     $ord_inf->product_id = $prod_inf[$key]['id'];
-
+                    $ord_inf->order_status = 'false' ;
                     $ord_inf->save();
           }
 
@@ -389,8 +388,8 @@ public function actionCheck()
             $report->status = $ord->finish;
             $report->pay_sum = $ord->amount;
             $report->pay_id = $ord->billid;
-            $report->manager_ID = $ord->manager_id;
-            $report->boss_ID = 501;
+            $report->manager_id = $ord->manager_id;
+            $report->boss_id = 501;
             $report->save();
 
             unset($session['link']);

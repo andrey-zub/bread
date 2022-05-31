@@ -17,7 +17,7 @@ class ReportSearch extends Report
     public function rules()
     {
         return [
-            [['id', 'pay_sum', 'manager_ID', 'boss_ID'], 'integer'],
+            [['id', 'pay_sum', 'manager_id', 'boss_id'], 'integer'],
             [['owner_name', 'owner_email', 'status', 'pay_id'], 'safe'],
         ];
     }
@@ -46,11 +46,6 @@ class ReportSearch extends Report
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                 'forcePageParam' => false,
-                 'pageSizeParam' => false,
-                'pageSize' => 5
-            ]
         ]);
 
         $this->load($params);
@@ -65,8 +60,8 @@ class ReportSearch extends Report
         $query->andFilterWhere([
             'id' => $this->id,
             'pay_sum' => $this->pay_sum,
-            'manager_ID' => $this->manager_ID,
-            'boss_ID' => $this->boss_ID,
+            'manager_id' => $this->manager_id,
+            'boss_id' => $this->boss_id,
         ]);
 
         $query->andFilterWhere(['like', 'owner_name', $this->owner_name])

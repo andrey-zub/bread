@@ -41,9 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'passport',
 
             ['class' => 'yii\grid\ActionColumn',
-          'template' => '{view} {update}]',
+          'template' => '{view} {update}',
         ],
-    ]); ?>
+      ],
+        ]); ?>
 
     <?php Pjax::end(); ?>
 

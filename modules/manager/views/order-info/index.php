@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-  
+
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -34,9 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_id',
             'owner_id',
             'baker_id',
-            //'manager_id',
+            'manager_id',
+            'order_status',
 
-
+            ['class' => 'yii\grid\ActionColumn',
+            'template'=> '{update} {view}',
+          ],
         ],
     ]); ?>
 

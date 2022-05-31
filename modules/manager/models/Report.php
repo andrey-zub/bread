@@ -7,13 +7,17 @@ use Yii;
 /**
  * This is the model class for table "report".
  *
- * @property string|null $owner-name
- * @property string|null $owner-email
- * @property string|null $stasus
+ * @property int $id
+ * @property string|null $owner_name
+ * @property string|null $owner_email
+ * @property string|null $status
  * @property int|null $pay_sum
  * @property string|null $pay_id
- * @property int|null $manager_ID
- * @property int $boss_ID
+ * @property int $manager_id
+ * @property int $boss_id
+ *
+ * @property Employee $manager
+ * @property Employee $boss
  */
 class Report extends \yii\db\ActiveRecord
 {
@@ -31,10 +35,12 @@ class Report extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pay_sum', 'manager_ID', 'boss_ID'], 'integer'],
-            [['boss_ID'], 'required'],
-            [['owner-name', 'owner-email', 'stasus'], 'string', 'max' => 50],
+            [['pay_sum', 'manager_id', 'boss_id'], 'integer'],
+            [['manager_id', 'boss_id'], 'required'],
+            [['owner_name', 'owner_email', 'status'], 'string', 'max' => 50],
             [['pay_id'], 'string', 'max' => 255],
+            [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['manager_id' => 'id']],
+            [['boss_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['boss_id' => 'id']],
         ];
     }
 
@@ -44,18 +50,34 @@ class Report extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'owner-name' => 'Owner Name',
-            'owner-email' => 'Owner Email',
-            'stasus' => 'Stasus',
+            'id' => 'ID',
+            'owner_name' => 'Owner Name',
+            'owner_email' => 'Owner Email',
+            'status' => 'Status',
             'pay_sum' => 'Pay Sum',
             'pay_id' => 'Pay ID',
-            'manager_ID' => 'Manager ID',
-            'boss_ID' => 'Boss ID',
+            'manager_id' => 'Manager ID',
+            'boss_id' => 'Boss ID',
         ];
     }
 
+    /**
+     * Gets query for [[Manager]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getManager()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'manager_id']);
+    }
 
-
-
-
+    /**
+     * Gets query for [[Boss]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBoss()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'boss_id']);
+    }
 }

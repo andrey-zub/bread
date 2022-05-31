@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'owner_email:email',
             'status',
             'pay_sum',
-            //'pay_id',
-            //'manager_ID',
-            //'boss_ID',
+            'pay_id',
+            'manager_id',
+            'boss_id',
 
             ['class' => 'yii\grid\ActionColumn',
           'template' => '{view} {update}',

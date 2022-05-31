@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\admin\Controllers;
+namespace app\modules\admin\controllers;
 
 use Yii;
 use app\modules\admin\models\Report;
