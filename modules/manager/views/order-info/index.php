@@ -31,10 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'order_id',
-            'product_id',
-            'owner_id',
-            'baker_id',
-            'manager_id',
+            [
+              'attribute'=>'product_id',
+              'value'=>'product.product_name',
+            ],
+
+            [
+              'attribute'=>'owner_id',
+              'value'=>'owner.name',
+            ],
+            [
+              'attribute'=>'baker_id',
+              'value'=>'employee.fio',
+            ],
+          
             'order_status',
 
             ['class' => 'yii\grid\ActionColumn',

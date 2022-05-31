@@ -17,8 +17,8 @@ class OrderInfoSearch extends OrderInfo
     public function rules()
     {
         return [
-            [['id', 'order_id', 'product_id', 'owner_id', 'baker_id', 'manager_id'], 'integer'],
-            [['order_status'], 'safe'],
+            [['id', 'order_id', ], 'integer'],
+            [['order_status','product_id', 'owner_id', 'baker_id', 'manager_id'], 'safe'],
         ];
     }
 
@@ -65,8 +65,13 @@ class OrderInfoSearch extends OrderInfo
             'baker_id' => $this->baker_id,
             'manager_id' => $this->manager_id,
         ]);
-
+        $query->joinWith(['owner','employee','product']);
         $query->andFilterWhere(['like', 'order_status', $this->order_status]);
+
+        $query->andFilterWhere(['like', 'employee.fio', $this->manager_id]);
+        $query->andFilterWhere(['like', 'employee.fio', $this->baker_id]);
+          $query->andFilterWhere(['like', 'owner.name', $this->owner_id]);
+          $query->andFilterWhere(['like', 'product.product_name', $this->product_id]);
 
         return $dataProvider;
     }

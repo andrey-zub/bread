@@ -56,9 +56,19 @@ class Report extends \yii\db\ActiveRecord
             'status' => 'Status',
             'pay_sum' => 'Pay Sum',
             'pay_id' => 'Pay ID',
-            'manager_id' => 'Manager ID',
-            'boss_id' => 'Boss ID',
+            'manager_id' => 'Manager ',
+            'boss_id' => 'Boss ',
         ];
+    }
+
+
+    public function getEmployee()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'manager_id']);
+    }
+    public function getEmployeeName()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'manager_id'])->via('fio');
     }
 
     /**

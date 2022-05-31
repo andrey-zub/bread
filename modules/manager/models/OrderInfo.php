@@ -38,6 +38,8 @@ class OrderInfo extends \yii\db\ActiveRecord
             [['order_status'], 'string', 'max' => 50],
             [['baker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['baker_id' => 'id']],
             [['manager_id'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::className(), 'targetAttribute' => ['manager_id' => 'id']],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => Owner::className(), 'targetAttribute' => ['owner_id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -49,10 +51,10 @@ class OrderInfo extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'order_id' => 'Order ID',
-            'product_id' => 'Product ID',
-            'owner_id' => 'Owner ID',
-            'baker_id' => 'Baker ID',
-            'manager_id' => 'Manager ID',
+            'product_id' => 'Product ',
+            'owner_id' => 'Owner ',
+            'baker_id' => 'Baker ',
+            'manager_id' => 'Manager ',
             'order_status' => 'Order Status',
         ];
     }
@@ -62,9 +64,24 @@ class OrderInfo extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
+     public function getEmployee()
+     {
+         return $this->hasOne(Employee::className(), ['id' => 'baker_id']);
+     }
+
+     public function getEmployeeName()
+     {
+         return $this->hasOne(Employee::className(), ['id' => 'manager_id'])->via('fio');
+     }
     public function getBaker()
     {
         return $this->hasOne(Employee::className(), ['id' => 'baker_id']);
+    }
+
+    public function getBakerName()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'baker_id'])->via('fio');
     }
 
     /**
@@ -75,5 +92,30 @@ class OrderInfo extends \yii\db\ActiveRecord
     public function getManager()
     {
         return $this->hasOne(Employee::className(), ['id' => 'manager_id']);
+    }
+
+    public function getManagerName()
+    {
+        return $this->hasOne(Employee::className(), ['id' => 'manager_id'])->via('fio');
+    }
+
+    public function getOwner()
+    {
+        return $this->hasOne(Owner::className(), ['id' => 'owner_id']);
+    }
+
+    public function getOwnerName()
+    {
+        return $this->hasOne(Owner::className(), ['id' => 'owner_id'])->via('name');
+    }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+
+    public function getProductName()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id'])->via('product_name');
     }
 }

@@ -64,10 +64,14 @@ class ReportSearch extends Report
             'boss_id' => $this->boss_id,
         ]);
 
-        $query->andFilterWhere(['like', 'owner_name', $this->owner_name])
+        $query->joinWith('employee')
+            ->andFilterWhere(['like', 'owner_name', $this->owner_name])
             ->andFilterWhere(['like', 'owner_email', $this->owner_email])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'pay_id', $this->pay_id]);
+            ->andFilterWhere(['like', 'pay_id', $this->pay_id])
+            ->andFilterWhere(['like', 'employee.fio', $this->manager_id])
+            ->andFilterWhere(['like', 'employee.fio', $this->boss_id]);
+
 
         return $dataProvider;
     }

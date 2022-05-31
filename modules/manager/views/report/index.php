@@ -35,8 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             'pay_sum',
             'pay_id',
-            'manager_id',
-            'boss_id',
+
+            [
+              'attribute'=>  'manager_id',
+              'value'=>'employee.fio',
+            ],
+          
+
+
 
             ['class' => 'yii\grid\ActionColumn',
           'template' => '{view} {update}',
