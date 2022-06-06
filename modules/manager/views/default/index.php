@@ -1,9 +1,9 @@
 <?
 
-$this->title = 'manager panel';
+$this->title = 'Manager menu';
 $this->params['breadcrumbs'][] = array(
-    'label'=> 'manager panel',
-    'url'=>Yii::$app->urlManager->createUrl(['manager/'])
+    'label'=> 'Admin panel',
+    'url'=>Yii::$app->urlManager->createUrl(['admin/'])
 );
 $this->params['breadcrumbs'][] = array(
     'label'=> 'Product menu',

@@ -1,14 +1,14 @@
 <?php
     use yii\helpers\Url;
-;
+
     use yii\grid\GridView;
     use yii\widgets\Pjax;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
 
-    $this->title = 'Cart menu';
+    $this->title = 'Checkout page';
     $this->params['breadcrumbs'][] = array(
-        'label'=> 'Product menu',
+        'label'=> 'checkout',
         'url'=>Yii::$app->urlManager->createUrl(['page/product'])
     );
 

@@ -45,22 +45,12 @@ class PageController extends SiteController
   public function actionCart()
   {
       $session = Yii::$app->session;
-//        $session->destroy();
-
-
-
-      if($session->has('productsSession')){
-          $productsSession = $session->get('productsSession');
-      }
-      else{
-          $productsSession = array();
-      }
+      if($session->has('productsSession')){ $productsSession = $session->get('productsSession'); }
+      else{  $productsSession = array(); }
 
       if(isset($_GET['id']) && !empty($_GET['id']) && filter_var($_GET['id'], FILTER_VALIDATE_INT)){
           $productsArray = Product::find()->where(['id' => $_GET['id']])->asArray()->one();
-
           if(is_array($productsArray) && count($productsArray) > 0){
-
               $flag = false;
               for($i = 0; $i < count($productsSession); $i++){
                   if($productsSession[$i]['id'] == $_GET['id']){
@@ -68,39 +58,25 @@ class PageController extends SiteController
                       break;
                   }
               }
-              if(!$flag){
-                  array_push($productsSession, ['id' => $_GET['id'], 'count' => 1 ]);
-              }
+              if(!$flag){  array_push($productsSession, ['id' => $_GET['id'], 'count' => 1 ]);  }
           }
       }
-
       $session->set('productsSession', $productsSession);
       $productsSession = $session->get('productsSession');
-
       $arrayID = array();
-
-      foreach($productsSession as $value){
-          array_push($arrayID, $value['id']);
-      }
+      foreach($productsSession as $value){  array_push($arrayID, $value['id']); }
 
       $products = Product::find()->where(['id' => $arrayID])->asArray()->All();
 
-      foreach($products as $key => $value){
-          $products[$key]['count_cart'] = $productsSession[$key]['count'] ;
-      }
+      foreach($products as $key => $value){ $products[$key]['count_cart'] = $productsSession[$key]['count'] ; }
 
-      foreach($products as $key => $value){
-          $amount += $products[$key]['count_cart'] * $products[$key]['price']  ;
-      }
+      foreach($products as $key => $value){ $amount += $products[$key]['count_cart'] * $products[$key]['price']  ; }
 
               if (  $session->has('product')  ){
                          $product= $session->get('product');
                          $session->set('product',$products);
-              }  else {
-                 $session->set('product',$products);
-                }
-
-          $session->set('amount',$amount);
+              }  else {  $session->set('product',$products); }
+      $session->set('amount',$amount);
 
   return $this->render('cart', [
             'dataProvider' => new ArrayDataProvider([
@@ -119,7 +95,6 @@ class PageController extends SiteController
 //--------------------------------------------------------
 public function actionCartDeBuff(){
 $session = Yii::$app->session;
-
     if($session->has('product')){  $product = $session->get('product');  }
     else{  $product = array();   }
 
@@ -129,7 +104,6 @@ $session = Yii::$app->session;
             break;
         }
     }
-
  $session->set('product',$product);
 
  return $this->render('cart-de-buff', [
@@ -137,15 +111,11 @@ $session = Yii::$app->session;
                'allModels' => $product,
                'key'=>'id',
                'pagination' => [
-                   'pageSize' => 50,
-               ],
+                   'pageSize' => 50, ],
            ]),
            'products'=>$product,
        ]);
 }
-
-
-
 
 public function actionCartBuff(){
 $session = Yii::$app->session;
@@ -159,7 +129,6 @@ $session = Yii::$app->session;
             break;
         }
     }
-
  $session->set('product',$product);
 
  return $this->render('cart-buff', [
@@ -177,25 +146,18 @@ $session = Yii::$app->session;
 
 
 public function actionCheckout(){
-
       $order = new OrderCheck();
-        $session = Yii::$app->session;
-
-
+      $session = Yii::$app->session;
       if($order->load(\Yii::$app->request->post())){
-
             $billPayments = new \Qiwi\Api\BillPayments(SECRET_KEY);
-
               $publicKey = '48e7qUxn9T7RyYE1MVZswX1FRSbE6iyCj2gCRwwF3Dnh5XrasNTx3BGPiMsyXQFNKQhvukniQG8RTVhYm3iPsZ232WYoMXoun8DPNcoxZShiC2AwFPnt34SX1pQSww7jFGZVyhe8rG5QDXhLZtNj48CSZbLydDrzxsXKazhXrwtNNP1wXryNtoteA6pDp';
-
               $params = [
               'publicKey' => $publicKey,
-              'amount' =>   1,    //$sum,
+              'amount' =>   1,   //$sum,
               'billId' => $billId = $billPayments->generateId(),
               'lifetime' => $lifetime = $billPayments->getLifetimeByDay(1),
               'successUrl' => 'http://bread/page/check',
               ];
-
                           $cookies = \Yii::$app->response->cookies;
                           $cookies->add(new \yii\web\Cookie([
                           'name' => 'email',
@@ -213,25 +175,18 @@ public function actionCheckout(){
                           'name' => 'phone',
                           'value' => $order->phone
                           ]));
-
                           $cookies->add(new \yii\web\Cookie([
                           'name' => 'amount',
                           'value' => $session->get('amount')
                           ]));
 
               $link = $billPayments->createPaymentForm($params);
-
               $session = Yii::$app->session;
               $session->set('link',  $link);
-
-
         }
 
-        if (Yii::$app->request->post('submit') === 'check'){
-          return $this->redirect($link);
-        } elseif (Yii::$app->request->post('submit') === 'fail') {
-          return $this->redirect(['page/check-fail']);
-        }
+        if (Yii::$app->request->post('submit') === 'check'){  return $this->redirect($link);}
+        elseif (Yii::$app->request->post('submit') === 'fail') { return $this->redirect(['page/check-fail']); }
 
         $cookies = \Yii::$app->response->cookies;
         unset($cookies['email']);
@@ -239,9 +194,7 @@ public function actionCheckout(){
         unset($cookies['phone']);
         unset($cookies['id']);
         unset($cookies['amount']);
-
       return $this->render('checkout',compact('session','order'))  ;
-
       }
 
 // Успешная оплата заказа

@@ -1,6 +1,5 @@
 <?php
     use yii\helpers\Url;
-;
     use yii\grid\GridView;
     use yii\widgets\Pjax;
     use yii\helpers\Html;
@@ -11,13 +10,9 @@
         'label'=> 'Product menu',
         'url'=>Yii::$app->urlManager->createUrl(['page/product'])
     );
-
-?>
-
-<? $session = Yii::$app->session;
+    $session = Yii::$app->session;
      $product = $session->get('product');
-
-         ?>
+  ?>
 
 <div class="col-lg-12 ">
     <div>
@@ -35,69 +30,42 @@
         </div>
     <?php else: $sum = 0?>
 
-
-
-
-
       <?= GridView::widget([
           'dataProvider' => $dataProvider,
           'columns' => [
-            [
-              'label'=>'ID',
-              'value'=>'id',
-            ],
-            [
-              'label'=>'Наименование товара',
-              'value'=>'product_name',
-            ],
-
-            [
-              'label'=>'Кол-во товара в корзине',
-              'value'=>'count_cart',
-            ],
-            [
-              'label'=>'Цена за единицу товара',
-              'value'=>'price',
-            ],
-
-            [
-              'class' => 'yii\grid\ActionColumn',
+            [ 'label'=>'ID',
+              'value'=>'id', ],
+            [ 'label'=>'Наименование товара',
+              'value'=>'product_name', ],
+            [ 'label'=>'Кол-во товара в корзине',
+              'value'=>'count_cart', ],
+            [ 'label'=>'Цена за единицу товара',
+              'value'=>'price', ],
+            [ 'class' => 'yii\grid\ActionColumn',
               'template' => ' {cart-buff} {cart-de-buff}',
               'buttons' => [
-
                   'cart-de-buff' => function ($url,$model,$key) {
                       return  Html::a('<span class="glyphicon glyphicon-minus" ></span>', $url);
                   },
-
                   'cart-buff' => function ($url,$model,$key) {
                       return  Html::a('<span class="glyphicon glyphicon-plus" ></span>', $url);
                   },
             ],
           ],
         ],
-
       ]); ?>
-
-
 
     <table class="table table-bordered">
         <tr>
             <td></td>
             <td bgcolor="#f6eed3" align="center">Выбранный товар</td>
-
             <td bgcolor="#D3EDF6" align="center">Стоимость</td>
-
             <td bgcolor="#8deca6" align="center">-------</td>
-
         </tr>
-
         <?php foreach($product as $key => $value):?>
             <tr >
                 <td></td>
-
                 <td ><?php echo $product[$key]['product_name'];?></td>
-
-
                 <td ><?php
                                             $sum += $product[$key]['price'] * $product[$key]['count_cart'];
                                             echo $product[$key]['price'] * $product[$key]['count_cart'];?> руб

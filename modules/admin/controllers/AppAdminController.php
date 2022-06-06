@@ -13,7 +13,6 @@ class AppAdminController extends Controller
                      'access' => [
                          'class' => AccessControl::class,
                          'rules' => [
-
                            [
                                'allow'   => false,
                                'roles'   => ['?','manager']

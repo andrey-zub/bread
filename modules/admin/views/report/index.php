@@ -9,7 +9,15 @@ use yii\widgets\Pjax;
 
 $this->title = 'Reports';
 $this->params['breadcrumbs'][] = array(
-    'label'=> 'Manager panel',
+    'label'=> 'Admin panel',
+    'url'=>Yii::$app->urlManager->createUrl(['admin/'])
+);
+$this->params['breadcrumbs'][] = array(
+    'label'=> 'Product menu',
+    'url'=>Yii::$app->urlManager->createUrl(['page/product'])
+);
+$this->params['breadcrumbs'][] = array(
+    'label'=> 'Manager menu',
     'url'=>Yii::$app->urlManager->createUrl(['manager/'])
 );
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,7 +26,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
+    <p>
+        <?= Html::a('Create Report', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -39,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'boss_id',
 
             ['class' => 'yii\grid\ActionColumn',
-          'template' => '{view} {update}',
+      
           ],
         ],
     ]); ?>

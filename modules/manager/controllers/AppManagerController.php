@@ -27,10 +27,4 @@ class AppManagerController extends Controller
                      ],
                  ];
             }
-
-
-
-
-
-
 }

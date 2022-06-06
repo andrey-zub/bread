@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'attribute'=>  'manager_id',
               'value'=>'employee.fio',
             ],
-          
+
 
 
 

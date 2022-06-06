@@ -1,4 +1,11 @@
-<?  use yii\helpers\Url; ?>
+<?  use yii\helpers\Url;
+
+$this->title = 'Check-fail';
+$this->params['breadcrumbs'][] = array(
+    'label'=> 'check-fail',
+    'url'=>Yii::$app->urlManager->createUrl(['page/product'])
+);
+?>
 
 <div class="col-lg-12 ">
     <div>
